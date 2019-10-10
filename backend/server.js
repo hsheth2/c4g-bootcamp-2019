@@ -42,6 +42,10 @@ app.post('/api/items', (req, res) => {
         text,
         complete: false,
     })
+
+    res.json({
+        result: "success",
+    })
 })
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

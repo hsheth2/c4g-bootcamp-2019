@@ -36,6 +36,32 @@ class App extends React.Component {
       })
   }
 
+  itemInputChanged = (event) => {
+    console.log('input state changed')
+    this.setState({
+      inputText: event.value,
+    })
+  }
+
+  addItem = () => {
+    console.log('adding item');
+    fetch('/api/items', {
+      method: 'POST',
+      body: JSON.stringify({
+        text: this.state.inputText,
+      }),
+    })
+      .then((response) => {
+        console.log("added item!");
+
+        this.setState({
+          inputText: "",
+          loaded: false,
+        })
+        this.fetchItems();
+      })
+  }
+
   render() {
     if (!this.state.loaded) {
       return (

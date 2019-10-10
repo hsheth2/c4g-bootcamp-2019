@@ -7,6 +7,7 @@ class App extends React.Component {
     this.state = {
       loaded: false,
       items: [],
+      inputText: "",
     }
   }
 
@@ -45,6 +46,8 @@ class App extends React.Component {
     return (
       <div>
         <h1>To Do List</h1>
+        <input onChange={this.itemInputChanged} value={this.inputText} placeholder="Enter your to do list item:"></input>
+        <button onClick={this.addItem}>Add item</button>
         <ul>
           {this.state.items.map((item) => 
             <li key={item.id}>{item.text}</li>

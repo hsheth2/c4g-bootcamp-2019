@@ -32,7 +32,16 @@ app.get('/api/items', (req, res) => {
 })
 
 app.post('/api/items', (req, res) => {
-    // TODO: Setup this.
+    console.log(req.body);
+
+    const text = req.body.text;
+    const id = items.length;
+
+    items.push({
+        id,
+        text,
+        complete: false,
+    })
 })
 
 app.listen(port, () => console.log(`Server listening on port ${port}!`));

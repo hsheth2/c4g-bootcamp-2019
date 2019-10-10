@@ -5,21 +5,51 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      counter: 5,
+      loaded: false,
+      items: [],
     }
   }
 
-  incrementCounter = () => {
-    this.setState({
-      counter: this.state.counter + 1,
-    });
+  componentDidMount() {
+    this.fetchItems();
+  }
+
+  fetchItems = () => {
+    fetch('/api/items')
+      .then((response) => {
+        console.log(response);
+        response.json()
+          .then((data) => {
+            console.log(data);
+            this.setState({
+              loaded: true,
+              items: data,
+            })
+          })
+          .catch((err) => {
+            console.error(err);
+          })
+      })
+      .catch((err) => {
+        console.error(err);
+      })
   }
 
   render() {
+    if (!this.state.loaded) {
+      return (
+        <div><h1>Loading...</h1></div>
+      )
+    }
+
     return (
       <div>
-        <h1>Counter: {this.state.counter}</h1>
-        <button onClick={this.incrementCounter}>Increment the counter</button>
+        <h1>To Do List</h1>
+        <ul>
+          {this.state.items.map((item) => 
+            <li>{item.text}</li>
+          )}
+        </ul>
       </div>
     );
   }

@@ -37,23 +37,23 @@ class App extends React.Component {
   }
 
   itemInputChanged = (event) => {
-    console.log('input state changed')
     this.setState({
-      inputText: event.value,
+      inputText: event.target.value,
     })
   }
 
   addItem = () => {
-    console.log('adding item');
     fetch('/api/items', {
       method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
       body: JSON.stringify({
         text: this.state.inputText,
       }),
     })
       .then((response) => {
-        console.log("added item!");
-
         this.setState({
           inputText: "",
           loaded: false,
@@ -72,7 +72,7 @@ class App extends React.Component {
     return (
       <div>
         <h1>To Do List</h1>
-        <input onChange={this.itemInputChanged} value={this.inputText} placeholder="Enter your to do list item:"></input>
+        <input onChange={this.itemInputChanged} value={this.state.inputText} placeholder="Enter your to do list item:"></input>
         <button onClick={this.addItem}>Add item</button>
         <ul>
           {this.state.items.map((item) => 
